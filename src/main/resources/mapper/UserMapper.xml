@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace属性：用于指定当前的映射文件和哪个接口进行映射，需要指定接口的文件路径，需要标注包的完整路径接口-->
+<mapper namespace="com.cy.school1.mapper.UserMapper">
+    <!--自定义映射规则：resultMap标签完成映射规则的定义-->
+    <!--
+        id属性：标签给这个映射负责分配一个唯一的id值，对应的就是resultMap="id属性的值"属性的取值
+        type属性：取值是一个类，表示的是数据库的查询结果与Java中哪个实体类进行结果集的映射
+    -->
+    <resultMap id="UserEntityMap" type="com.cy.school1.entity.Student">
+        <!--将表的资源和类的属性不一致的字段进行匹配指定，名称一致可不写-->
+        <!--
+            配合完成名称不一致的映射
+            column属性：表示表中的资源名称
+            property属性：表示类中的属性名称
+        -->
+        <!--在定义规则时主键是不可以省略的-->
+        <id column="sno" property="sno"></id>
+        <result column="is_delete" property="isDelete"></result>
+        <result column="created_user" property="createdUser"></result>
+        <result column="created_time" property="createdTime"></result>
+        <result column="modified_user" property="modifiedUser"></result>
+        <result column="modified_time" property="modifiedTime"></result>
+    </resultMap>
+    <resultMap id="UserEntityMapT" type="com.cy.school1.entity.Teacher">
+        <!--将表的资源和类的属性不一致的字段进行匹配指定，名称一致可不写-->
+        <!--
+            配合完成名称不一致的映射
+            column属性：表示表中的资源名称
+            property属性：表示类中的属性名称
+        -->
+        <!--在定义规则时主键是不可以省略的-->
+        <id column="tno" property="tno"></id>
+        <result column="is_delete" property="isDelete"></result>
+        <result column="created_user" property="createdUser"></result>
+        <result column="created_time" property="createdTime"></result>
+        <result column="modified_user" property="modifiedUser"></result>
+        <result column="modified_time" property="modifiedTime"></result>
+    </resultMap>
+
+    <!--id属性：表示映射的接口中方法的名称，直接在标签的内容部分来编写SQL语句-->
+    <!--将SQL语句与java代码进行分离，不需要调整java代码-->
+    <insert id="insert">
+        INSERT INTO student(
+            sno,sname,password,phone,email,gender,
+            status,shome,avatar,is_delete,created_user,created_time,
+            modified_user,modified_time
+        ) VALUES (
+            #{sno},#{sname},#{password},#{phone},#{email},#{gender},
+            #{status},#{shome},#{avatar},#{isDelete},#{createdUser},#{createdTime},
+            #{modifiedUser},#{modifiedTime}
+        )
+    </insert>
+
+
+<!--    <insert id="insert">-->
+<!--        INSERT INTO student(-->
+<!--            sno,sname,password-->
+<!--        ) VALUES (-->
+<!--            #{sno},#{sname},#{password}-->
+<!--        )-->
+<!--    </insert>-->
+
+    <insert id="insertT">
+        INSERT INTO teacher(
+            tno,tname,password
+        ) VALUES (
+                     #{tno},#{tname},#{password}
+                 )
+    </insert>
+
+
+    <!--select语句在执行的时候，查询的结果是一个对象，多个对象-->
+    <!--
+        resultType:表示查询的结果集类型，只需要指定对应映射的类型，并且包含完整包接口
+        resultMap:标签当表的字段和对象属性的字段名称不一致时，来自定义查询结果的映射规则
+    -->
+
+    <!--指定结果映射对应的规则，因为表的字段和属性不一致-->
+    <select id="findBySno" resultMap="UserEntityMap">
+        SELECT * FROM student WHERE sno = #{sno}
+    </select>
+
+    <select id="findByTno" resultMap="UserEntityMapT">
+        SELECT * FROM teacher WHERE tno = #{tno}
+    </select>
+
+    <select id="findByMno" resultType="com.cy.school1.entity.Manager">
+        SELECT * FROM manager WHERE mno =#{mno}
+    </select>
+
+    
+    <update id="updatePasswordBySno">
+        UPDATE student SET
+            password=#{password},
+            modified_user=#{modifiedUser},
+            modified_time=#{modifiedTime}
+        WHERE sno=${sno}
+    </update>
+
+    <update id="updateInfoBySno">
+        UPDATE student
+        SET
+            <!--if表示条件标签，test接收的是一个返回值为boolean类型的条件，
+                如果test条件的结果为true则执行if标签内部的语句-->
+            <if test="phone!=null">phone = #{phone},</if>
+            <if test="email!=null">email = #{email},</if>
+            <if test="gender!=null">gender = #{gender},</if>
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        WHERE sno = ${sno}
+    </update>
+
+
+    <update id="updateAvatarBySno">
+        UPDATE student
+        SET
+            avatar=#{avatar},
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        WHERE
+            sno = #{sno}
+    </update>
+
+
+    <!--查询所有学生-->
+    <select id="selectAllStudent" resultType="com.cy.school1.entity.Student">
+        SELECT * FROM student;
+    </select>
+    
+<!--    <select id="selectByCondition" resultMap="UserEntityMap">-->
+<!--        SELECT * FROM student-->
+<!--        WHERE sdept = #{sdept}-->
+<!--        AND classes = #{classes}-->
+<!--        AND sno like #{sno}-->
+<!--    </select>-->
+
+    <!--
+
+        动态条件查询
+            * if:条件判断
+                * test:逻辑表达式
+            * 问题：
+                * 恒等式 where 1=1
+    -->
+    <select id="selectByCondition" resultMap="UserEntityMap">
+        SELECT * FROM student
+        /*WHERE 1 = 1*/
+        <where>
+            <if test="sdept != null">
+               AND sdept = #{sdept}
+            </if>
+            <if test="classes != null">
+                AND classes = #{classes}
+            </if>
+            <if test="sno != null and sno != '' ">
+                AND sno LIKE #{sno}
+            </if>
+        </where>
+    </select>
+
+    <!--单条件查询-->
+<!--    <select id="selectByConditionSingle" resultType="com.cy.school.entity.Student">-->
+<!--        SELECT *-->
+<!--        FROM student-->
+<!--        WHERE-->
+<!--        <choose>&lt;!&ndash;相当于switch&ndash;&gt;-->
+<!--            <when test="sdept != null">&lt;!&ndash;相当于case&ndash;&gt;-->
+<!--                sdept = #{sdept}-->
+<!--            </when>-->
+<!--            <when test="classes != null">&lt;!&ndash;相当于case&ndash;&gt;-->
+<!--                classes = #{classes}-->
+<!--            </when>-->
+<!--            <when test="sno != null and sno != '' ">-->
+<!--                 sno like #{sno}-->
+<!--            </when>-->
+<!--            <otherwise>-->
+<!--                1=1-->
+<!--            </otherwise>-->
+<!--        </choose>-->
+<!--    </select>-->
+
+    <!-- 单条件动态查询 -->
+    <select id="selectByConditionSingle" resultType="com.cy.school1.entity.Student">
+        SELECT *
+        FROM student
+        <where>
+            <where>
+                <if test="sdept != null">
+                    AND sdept = #{sdept}
+                </if>
+                <if test="classes != null">
+                    AND classes = #{classes}
+                </if>
+                <if test="sno != null and sno != '' ">
+                    AND sno LIKE #{sno}
+                </if>
+            </where>
+        </where>
+    </select>
+
+    <!-- 通过AND条件查询 -->
+<!--    <select id="selectByConditionAnd" resultType="com.cy.school1.entity.Student">-->
+<!--        SELECT *-->
+<!--        FROM student-->
+<!--        <where>-->
+<!--            <if test="sno != null">-->
+<!--                AND sno like CONCAT('%',#{sno},'%')-->
+<!--            </if>-->
+<!--            <if test="sname != null">-->
+<!--                AND sname like CONCAT('%',#{sname},'%')-->
+<!--            </if>-->
+<!--            <if test="gender != null">-->
+<!--                AND gender = #{gender}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+    <select id="selectByConditionAnd" resultMap="UserEntityMap">
+    select * from student
+    <where>
+        is_delete=0 and
+        <choose>
+            <when test="key1=='sno'">
+                sno like concat('%',#{value1},'%')
+                <choose>
+                    <when test="key2=='sname'">
+                        and sname like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='phone'">
+                        and phone like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='status'">
+                        and status like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='shome'">
+                        and shome like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='email'">
+                        and email like concat('%',#{value2},'%');
+                    </when>
+                    <otherwise>
+                        ;
+                    </otherwise>
+                </choose>
+            </when>
+            <when test="key1=='sname'">
+                sname like concat('%',#{value1},'%')
+                <choose>
+                    <when test="key2=='sno'">
+                        and sno like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='phone'">
+                        and phone like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='status'">
+                        and status like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='shome'">
+                        and shome like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='email'">
+                        and email like concat('%',#{value2},'%');
+                    </when>
+                    <otherwise>
+                        ;
+                    </otherwise>
+                </choose>
+            </when>
+            <when test="key1=='phone'">
+                phone like concat('%',#{value1},'%')
+                <choose>
+                    <when test="key2=='sname'">
+                        and sname like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='sno'">
+                        and sno like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='status'">
+                        and status like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='shome'">
+                        and shome like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='email'">
+                        and email like concat('%',#{value2},'%');
+                    </when>
+                    <otherwise>
+                        ;
+                    </otherwise>
+                </choose>
+            </when>
+            <when test="key1=='status'">
+                status like concat('%',#{value1},'%')
+                <choose>
+                    <when test="key2=='sname'">
+                        and sname like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='phone'">
+                        and phone like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='sno'">
+                        and sno like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='shome'">
+                        and shome like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='email'">
+                        and email like concat('%',#{value2},'%');
+                    </when>
+                    <otherwise>
+                        ;
+                    </otherwise>
+                </choose>
+            </when>
+            <when test="key1=='shome'">
+                shome like concat('%',#{value1},'%')
+                <choose>
+                    <when test="key2=='sname'">
+                        and sname like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='phone'">
+                        and phone like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='status'">
+                        and status like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='sno'">
+                        and sno like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='email'">
+                        and email like concat('%',#{value2},'%');
+                    </when>
+                    <otherwise>
+                        ;
+                    </otherwise>
+                </choose>
+            </when>
+            <when test="key1=='email'">
+                email like concat('%',#{value1},'%')
+                <choose>
+                    <when test="key2=='sname'">
+                        and sname like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='phone'">
+                        and phone like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='status'">
+                        and status like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='sno'">
+                        and sno like concat('%',#{value2},'%');
+                    </when>
+                    <when test="key2=='sno'">
+                        and sno like concat('%',#{value2},'%');
+                    </when>
+                    <otherwise>
+                        ;
+                    </otherwise>
+                </choose>
+            </when>
+        </choose>
+        </where>
+    </select>
+
+
+    <!--OR多条件-->
+    <select id="selectByConditionOr" resultType="com.cy.school1.entity.Student">
+        select * from student
+        <where>
+            is_delete=0 and
+            <choose>
+                <when test="key1=='sno'">
+                    sno like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            or sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            or phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            or status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            or shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            or email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='sname'">
+                    sname like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sno'">
+                            or sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            or phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            or status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            or shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            or email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='phone'">
+                    phone like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            or sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            or sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            or status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            or shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            or email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='status'">
+                    status like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            or sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            or phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            or status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            or shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            or email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='shome'">
+                    shome like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            or sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            or phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            or status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            or sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            or email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='email'">
+                    email like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            or sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            or phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            or status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            or sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            or sno like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <!--Not多条件-->
+    <select id="selectByConditionNot" resultType="com.cy.school1.entity.Student">
+          select * from student
+        <where>
+            is_delete=0 and
+            <choose>
+                <when test="key1=='sno'">
+                    not sno like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            and not sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            and not phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            and not status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            and not shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            and not email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='sname'">
+                    not sname like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sno'">
+                            and not sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            and not phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            and not status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            and not shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            and not email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='phone'">
+                    not phone like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            and not sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            and not sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            and not status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            and not shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            and not email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='status'">
+                    not status like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            and not sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            and not phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            and not sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='shome'">
+                            and not shome like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            and not email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='shome'">
+                    not shome like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            and not sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            and not phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            and not status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            and not sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='email'">
+                            and not email like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='email'">
+                    not email like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='sname'">
+                            and not sname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='phone'">
+                            and not phone like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='status'">
+                            and not status like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            and not sno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='sno'">
+                            and not sno like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+            </choose>
+        </where>
+    </select>
+
+
+    <!-- 通过OR条件查询 -->
+<!--    <select id="selectByConditionOr" resultType="com.cy.school1.entity.Student">-->
+<!--        SELECT * FROM student-->
+<!--        <where>-->
+<!--            <if test="sno != null">-->
+<!--                OR sno like CONCAT('%',#{sno},'%')-->
+<!--            </if>-->
+<!--            <if test="sname != null">-->
+<!--                OR sname like CONCAT('%',#{sname},'%')-->
+<!--            </if>-->
+<!--            <if test="gender != null">-->
+<!--                OR gender = #{gender}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+<!--    &lt;!&ndash; 通过NOT条件查询 &ndash;&gt;-->
+<!--    <select id="selectByConditionNot" resultType="com.cy.school1.entity.Student">-->
+<!--        select * from student-->
+<!--        <where>-->
+<!--            <if test="sno != null">-->
+<!--                NOT sno like CONCAT('%',#{sno},'%')-->
+<!--            </if>-->
+<!--            <if test="sname != null">-->
+<!--                AND NOT sname like CONCAT('%',#{sname},'%')-->
+<!--            </if>-->
+<!--            <if test="gender != null">-->
+<!--                AND NOT gender = #{gender}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+
+    <select id="selectMyStudent" resultType="com.cy.school1.vo.StudentSelectVO">
+        select sc_order_item.sno,sc_order_item.cno,student.sname,course.cname,course.credit,ctime,
+               teacher.tno,teacher.tname
+        from sc_order_item,course,student,teacher
+        where sc_order_item.cno = course.cno
+          and sc_order_item.sno = student.sno and course.tea = teacher.tno
+          and teacher.tno = #{tno}
+        group by sc_order_item.sno,sc_order_item.cno
+    </select>
+
+    <!-- 查询所有老师 -->
+    <select id="findAllTeachers" resultType="com.cy.school1.entity.Teacher">
+        SELECT * FROM teacher;
+    </select>
+
+
+
+    <!--    <update id="updateStudent">-->
+<!--        UPDATE student-->
+<!--        SET-->
+<!--            password = #{password},-->
+<!--            phone = #{phone},-->
+<!--            email = #{email},-->
+<!--            gender = #{gender},-->
+<!--            sdept = #{sdept},-->
+<!--            classes = #{classes},-->
+<!--            status = #{status},-->
+<!--            shome = #{shome},-->
+<!--            modified_user = #{modifiedUser},-->
+<!--            modified_time = #{modifiedTime}-->
+<!--        WHERE sno = #{sno};-->
+<!--    </update>-->
+
+    <!--动态修改sql语句-->
+    <update id="updateStudent">
+        UPDATE student
+        <set>
+            <if test="sname != null and sname != ''">
+                sname = #{sname},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="gender != null and gender != ''">
+                gender = #{gender},
+            </if>
+            <if test="sdept != null and sdept != ''">
+                sdept = #{sdept},
+            </if>
+            <if test="classes != null and classes != ''">
+                classes = #{classes},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="shome != null and shome != ''">
+                shome = #{shome},
+            </if>
+            <if test="modifiedUser != null and modifiedUser != ''">
+                modified_user = #{modifiedUser},
+            </if>
+            <if test="modifiedTime != null">
+                modified_time = #{modifiedTime},
+            </if>
+            <if test="isDelete != null and isDelete != ''">
+                is_delete = #{isDelete},
+            </if>
+        </set>
+        WHERE sno = #{sno};
+    </update>
+
+    <!--删除语句-->
+    <delete id="deleteBySno">
+        DELETE FROM student WHERE sno = #{sno};
+    </delete>
+    <!--批量删除-->
+    <!--MyBatis会将数组参数封装为一个Map集合-->
+    <!--
+       * 默认：array=数组
+       * 使用@Param注解改变map集合的默认key的名称
+    -->
+    <delete id="deleteBySnos">
+        DELETE FROM student WHERE sno
+        IN
+            <foreach collection="snos" item="sno" separator="," open="(" close=")">
+                #{sno}
+            </foreach>
+              ;
+
+    </delete>
+
+
+    <!-- 删除学生：把属性设为1 -->
+    <update id="deleteFalseBySno">
+        update student
+        set is_delete=1
+        where sno=#{sno}
+    </update>
+
+
+    <!-- 查找所有学生：查找is_delete为0的学生 -->
+    <select id="findNotDeleteStudent" resultType="com.cy.school1.entity.Student">
+        select * from student
+        where is_delete = 0
+    </select>
+
+
+    <select id="notScoreStudent" resultMap="UserEntityMap">
+        SELECT *
+        FROM  student
+        WHERE is_delete=0 and NOT EXISTS
+            (SELECT *
+             FROM   score_order_item
+             WHERE cno=#{cno} and student.sno = score_order_item.sno)
+    </select>
+
+
+</mapper>

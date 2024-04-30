@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8">
+		<!--edge浏览器H5兼容设置-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--360浏览器H5兼容设置-->
+		<meta name="renderer" content="webkit" />
+		<title>教务系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--导入核心文件-->
+		<script src="../bootstrap3/js/holder.js"></script>
+		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<!-- 字体图标 -->
+		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="../css/top.css" />
+		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="../css/orderConfirm.css" />
+		<link rel="stylesheet" type="text/css" href="../css/cart.css" />
+<!--		<script src="../js/orderConfirm.js" type="text/javascript" charset="utf-8"></script>-->
+	</head>
+
+	<body>
+		<!--头部-->
+		<header class="header">
+			<!--教务系统logo-->
+			<div class="row">
+				<div class="col-md-3">
+					<a href="index.html">
+						<!--						<img src="../images/index/stumalllogo.png" />-->
+						<img src="../images/index/toplogo.jpg" alt="" width="300" height="80" />
+					</a>
+				</div>
+				<!--快捷选项-->
+				<div class="col-md-9 top-item">
+					<ul class="list-inline pull-right">
+						<li><a href="myScore.html"><span class="fa fa-search"></span>&nbsp;成绩查询</a></li>
+						<!--						<li class="li-split">|</li>-->
+						<!--						<li><a href="mySC.html"><span class="fa fa-file-text"></span>&nbsp;我的选修</a></li>-->
+						<!--						<li class="li-split">|</li>-->
+						<!--						<li><a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;待选列表</a></li>-->
+						<li class="li-split">|</li>
+						<!--						<li>-->
+						<!--下列列表按钮 ：课程管理-->
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown0-btn"><span class="fa fa-file-text"></span>&nbsp;课程管理 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="needCourse.html">必修课程</a></li>
+								<li><a href="mySC.html">我的选修</a></li>
+								<li><a href="cart.html">待选列表</a></li>
+							</ul>
+						</div>
+						</li>
+						<li class="li-split">|</li>
+
+						<li>
+							<!--下列列表按钮 ：资料管理-->
+							<div class="btn-group">
+								<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+									<span id="top-dropdown-btn"><span class="fa fa-gears"></span>&nbsp;资料管理 <span class="caret"></span></span>
+								</button>
+								<ul class="dropdown-menu top-dropdown-ul" role="menu">
+									<li><a href="password.html">修改密码</a></li>
+									<li><a href="userdata.html">个人资料</a></li>
+									<li><a href="upload.html">上传头像</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="li-split">&emsp;|</li>
+						<li><a href="login.html"><span class="fa fa-user"></span>&nbsp;登录</a></li>
+					</ul>
+
+				</div>
+			</div>
+			<div class="text clearfix" style="text-align:center;">
+				<span style="float:right;"><b>教务系统学生端</b></span>
+			</div>
+		</header>
+		<!--导航 -->
+		<!--分割导航和顶部-->
+		<div class="row top-nav">
+			<div class="col-md-6">
+				<ul class="nav nav-pills">
+					<li>
+						<a href="#"></a>
+					</li>
+					<li class="active"><a href="index.html"><span class="fa fa-home"></span></a></li>
+					<li><a href="userdata.html">个人资料</a></li>
+					<li><a href="needCourse.html">必修课程</a></li>
+					<li><a href="mySC.html">我的选修</a></li>
+					<li><a href="myScore.html">成绩查询</a></li>
+				</ul>
+			</div>
+		</div>
+		<!--头部结束-->
+		<!--导航结束-->
+		<div class="container">
+			<div class="col-md-offset-1 col-md-10">
+				<div class="col-md-4">
+					<div class="col-md-12 order-bar-active">
+						1.确认选课信息
+						<span class="pull-right"><span class="fa fa-chevron-right"></span></span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="col-md-12 order-bar-undo">
+						2.提交选课
+						<span class="pull-right"><span class="fa fa-chevron-right"></span></span>
+					</div>
+				</div>
+<!--				<div class="col-md-4">-->
+<!--					<div class="col-md-12 order-bar-undo">-->
+<!--						3.选课成功-->
+<!--					</div>-->
+<!--				</div>-->
+				<div class="col-md-12">
+					<form id="form-create-order" role="form">
+<!--						<div class="form-group">-->
+<!--							<label for="name">-->
+<!--								<p>选择收货地址：</p>-->
+<!--							</label>-->
+<!--							<select name="aid" id="address-list" class="form-control">-->
+<!--								<option>八戒&nbsp;&nbsp;&nbsp;家&nbsp;&nbsp;&nbsp;北京市房山区高老庄3排6号&nbsp;&nbsp;&nbsp;1380***1234</option>-->
+<!--								<option>八戒&nbsp;&nbsp;&nbsp;公司&nbsp;&nbsp;&nbsp;北京市海淀区中关村中路1号1001室&nbsp;&nbsp;&nbsp;1380***1234</option>-->
+<!--								<option>八戒&nbsp;&nbsp;&nbsp;宿舍&nbsp;&nbsp;&nbsp;北京市海淀区永丰镇30号&nbsp;&nbsp;&nbsp;1380***1234</option>-->
+<!--							</select>-->
+<!--						</div>-->
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<p class="panel-title">选课信息：</p>
+							</div>
+							<div class="panel-body">
+								<table class="cart-table" width="100%">
+									<thead>
+										<tr>
+<!--											<th width="15%"></th>-->
+											<th width="35%">课程名</th>
+											<th width="15%">学分</th>
+											<th width="15%">学期数</th>
+											<th width="20%">总学分</th>
+										</tr>
+									</thead>
+									<tbody id="cart-list" class="cart-body">
+										<tr>
+											<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>
+											<td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>
+											<td>¥<span>5298</span></td>
+											<td>1</td>
+											<td><span>5298</span></td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="total-bar">
+									&nbsp;
+									<span class="pull-right">已选课程
+										<span id="all-count">1</span>门 总学分
+										<span id="all-credit">5298</span>分
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="pay-bar">
+							<a href="cart.html">返回选课列表</a>
+							<span class="pull-right"><input id="btn-create-order" type="button" value="提交选课" class="btn btn-primary btn-lg link-pay"/></span>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<!--页脚开始-->
+		<div class="clearfix"></div>
+		<footer class="footer">
+<!--			&lt;!&ndash; 品质保障，私人定制等&ndash;&gt;-->
+<!--			<div class="text-center rights container">-->
+<!--				<div class="col-md-offset-2 col-md-2">-->
+<!--					<span class="fa fa-thumbs-o-up"></span>-->
+<!--					<p>品质保障</p>-->
+<!--				</div>-->
+<!--				<div class="col-md-2">-->
+<!--					<span class="fa fa-address-card-o"></span>-->
+<!--					<p>私人订制</p>-->
+<!--				</div>-->
+<!--				<div class="col-md-2">-->
+<!--					<span class="fa fa-graduation-cap"></span>-->
+<!--					<p>学生特供</p>-->
+<!--				</div>-->
+<!--				<div class="col-md-2">-->
+<!--					<span class="fa fa-bitcoin"></span>-->
+<!--					<p>专属特权</p>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			&lt;!&ndash;联系我们、下载客户端等&ndash;&gt;-->
+<!--			<div class="container beforeBottom">-->
+<!--				<div class="col-md-offset-1 col-md-3">-->
+<!--					<div><img src="../images/index/stumalllogo.png" alt="" class="footLogo" /></div>-->
+<!--					<div><img src="../images/index/footerFont.png" alt="" /></div>-->
+<!--				</div>-->
+<!--				<div class="col-md-4 callus text-center">-->
+<!--					<div class="col-md-4">-->
+<!--						<ul>-->
+<!--							<li>-->
+<!--								<a href="#">-->
+<!--									<p>买家帮助</p>-->
+<!--								</a>-->
+<!--							</li>-->
+<!--							<li><a href="#">新手指南</a></li>-->
+<!--							<li><a href="#">服务保障</a></li>-->
+<!--							<li><a href="#">常见问题</a></li>-->
+<!--						</ul>-->
+<!--					</div>-->
+<!--					<div class="col-md-4">-->
+<!--						<ul>-->
+<!--							<li>-->
+<!--								<a href="#">-->
+<!--									<p>商家帮助</p>-->
+<!--								</a>-->
+<!--							</li>-->
+<!--							<li><a href="#">商家入驻</a></li>-->
+<!--							<li><a href="#">商家后台</a></li>-->
+<!--						</ul>-->
+<!--					</div>-->
+<!--					<div class="col-md-4">-->
+<!--						<ul>-->
+<!--							<li>-->
+<!--								<a href="#">-->
+<!--									<p>关于我们</p>-->
+<!--								</a>-->
+<!--							</li>-->
+<!--							<li><a href="#">关于圆心</a></li>-->
+<!--							<li><a href="#">联系我们</a></li>-->
+<!--							<li>-->
+<!--								<span class="fa fa-wechat"></span>-->
+<!--								<span class="fa fa-weibo"></span>-->
+<!--							</li>-->
+<!--						</ul>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--				<div class="col-md-4">-->
+<!--					<div class="col-md-5">-->
+<!--						<p>电脑商城客户端</p>-->
+<!--						<img src="../images/index/ios.png" class="lf">-->
+<!--						<img src="../images/index/android.png" alt="" class="lf" />-->
+<!--					</div>-->
+<!--					<div class="col-md-6">-->
+<!--						<img src="../images/index/erweima.png">-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+			<!-- 页面底部-备案号 #footer -->
+			<div class="col-md-12 text-center bottom">
+<!--				Copyright © 2022 dnsc.cn All Rights Reserved 京ICP备08963888号-45 <a target="_blank" href="http://www.dnsc.cn/">圆心科技集团有限公司</a> 版权所有-->
+				Copyright © 2022 gdut.cn All Rights Reserved 粤ICP备08963888号 广东工业大学 版权所有
+			</div>
+
+		</footer>
+		<!--页脚结束-->
+		<!--页脚结束-->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				showSCList();
+			});
+
+			$("#btn-create-order").click(function () {
+				let cnos = location.search.substr(1); //cnos=11001&cnos=11002
+				$.ajax({
+					url:"/orders/create",
+					type:"GET",
+					data: cnos,  // cnos = 11001&cnos=11002
+					dataType:"JSON",
+					success:function (json) {
+						if (json.state == 200){
+							// location.href="payment.html";
+							location.href="index.html";
+							alert("选课单创建成功");
+							console.log(json.data);
+						}
+					},
+					error:function (xhr) {
+						alert("选课数据加载产生未知的异常！"+ xhr.status);
+					}
+				});
+			})
+
+			/* 展示选修列表数据 */
+			function showSCList(){
+				//清空tbody标签中的数据
+				$("#cart-list").empty();
+				console.log(location.search.substr(1)); //0前面，1后面
+				$.ajax({
+					url:"/scs/list",
+					type:"GET",
+					data:location.search.substr(1),  //截取参数列表，截取问号后面的
+					dataType:"JSON",
+					success:function (json) {
+						if (json.state == 200){
+							let list = json.data;
+							let allCount = 0;
+							let allCredit = 0;
+							for (let i = 0;i< list.length;i++){
+								let tr='<tr>\n' +
+										// '<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>\n' +
+										'<td>#{cname}</td>\n' +
+										'<td><span>#{credit}</span></td>\n' +
+										'<td>#{term}</td>\n' +
+										'<td><span>#{totalCredit}</span></td>\n' +
+										'</tr>';
+								// tr = tr.replace(/#{cno}/g,list[i].cno);
+								tr = tr.replace(/#{cname}/g,list[i].cname);
+								tr = tr.replace(/#{credit}/g,list[i].credit);
+								tr = tr.replace(/#{term}/g,list[i].term);
+								tr = tr.replace(/#{totalCredit}/g,list[i].term * list[i].credit);
+
+								$("#cart-list").append(tr);
+
+								//更新总学分和总学期数
+								allCount += list[i].term;
+								allCredit += list[i].term * list[i].credit;
+							}
+							$("#all-count").html(allCount);
+							$("#all-credit").html(allCredit);
+						}
+					},
+					error:function (xhr) {
+						alert("选修列表加载产生未知的异常！"+ xhr.status);
+					}
+				});
+			}
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.school1.mapper.CourseMapper">
+    <resultMap id="CourseEntityMap" type="com.cy.school1.entity.Course">
+            <id column="cno" property="cno"></id>
+            <result column="created_user" property="createdUser"></result>
+            <result column="created_time" property="createdTime"></result>
+            <result column="modified_user" property="modifiedUser"></result>
+            <result column="modified_time" property="modifiedTime"></result>
+    </resultMap>
+
+
+    <insert id="insertCourse">
+        INSERT INTO course(
+            cno,cname,credit,
+            cplace,ctime,tno,need,detail,
+            created_user,created_time,modified_user,modified_time
+        )VALUES(
+             #{cno},#{cname},#{credit},
+            #{cplace},#{ctime},#{tno},#{need},
+                #{detail},#{createdUser},#{createdTime},
+                #{modifiedUser},#{modifiedTime}
+         )
+    </insert>
+
+    <update id="updateCourse">
+        UPDATE course
+        <set>
+<!--            <if test="cno != null and cno != ''">-->
+<!--                cno = #{cno},-->
+<!--            </if>-->
+            <if test="cname != null and cname != ''">
+                cname = #{cname},
+            </if>
+            <if test="credit != null and credit != ''">
+                credit = #{credit},
+            </if>
+            <if test="ctime != null and ctime != ''">
+                ctime = #{ctime},
+            </if>
+            <if test="tno != null and tno != ''">
+                tno = #{tno},
+            </if>
+            <if test="need != null and need != ''">
+                need = #{need},
+            </if>
+            <if test="modifiedUser != null and modifiedUser != ''">
+                modified_user = #{modifiedUser},
+            </if>
+            <if test="modifiedTime != null">
+                modified_time = #{modifiedTime},
+            </if>
+            <if test="detail != null and detail != ''">
+                detail = #{detail},
+            </if>
+        </set>
+        WHERE cno = #{cno};
+    </update>
+
+    <select id="findHotList" resultType="com.cy.school1.vo.CourseVO">
+        SELECT cno,cname,credit,cplace,ctime,tname,need,detail
+        FROM course,teacher
+        WHERE need = 1 and course.tno = teacher.tno
+    </select>
+
+    <select id="findByCno" resultMap="CourseEntityMap">
+        SELECT *
+        FROM course
+        WHERE
+            cno = #{cno}
+    </select>
+
+    <!-- 查找必修课程 -->
+    <select id="findNeedList" resultType="com.cy.school1.entity.Course">
+        SELECT *
+        FROM course
+        WHERE need = 0
+    </select>
+
+    <!-- 教师查找我任教的课 -->
+    <select id="findTeacherCourse" resultType="com.cy.school1.vo.CourseVO">
+        select cno,cname,credit,cplace,ctime,course.tno,need,tname,detail
+        from course,teacher
+        where course.tno = teacher.tno and course.tno = #{tno}
+    </select>
+
+
+    <select id="findAllCourses" resultType="com.cy.school1.vo.CourseVO">
+        select cno,cname,credit,cplace,ctime,course.tno,teacher.tname,need,detail
+        from course,teacher
+        where course.tno = teacher.tno
+    </select>
+
+
+    <delete id="deleteCourse">
+        DELETE FROM course
+        WHERE cno = #{cno}
+    </delete>
+
+
+    <!-- And多条件查询 -->
+    <select id="selectByConditionAnd" resultType="com.cy.school1.vo.CourseVO">
+        select * from course,teacher
+        <where>
+            course.tno = teacher.tno and
+            <choose>
+                <when test="key1=='cno'">
+                    cno like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='cname'">
+                    cname like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cno'">
+                            and cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='credit'">
+                    credit like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='ctime'">
+                    ctime like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='cplace'">
+                    cplace like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='tname'">
+                    tname like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and cno like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+            </choose>
+        </where>
+    </select>
+
+
+    <!-- Or多条件查询 -->
+    <select id="selectByConditionOr" resultType="com.cy.school1.vo.CourseVO">
+        select * from course left join teacher USING (tno)
+        <where>
+            <choose>
+                <when test="key1=='cno'">
+                    cno like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            or cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            or credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            or ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            or cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            or tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='cname'">
+                    cname like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cno'">
+                            or cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            or credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            or ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            or cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            or tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='credit'">
+                    credit like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            or cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            or cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            or ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            or cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            or tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='ctime'">
+                    ctime like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            or cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            or credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            or cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            or cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            or tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='cplace'">
+                    cplace like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            or cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            or credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            or ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            or cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            or tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='tname'">
+                    tname like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            or cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            or credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            or ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            or cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            or cno like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <!-- NOT多条件-->
+    <select id="selectByConditionNot" resultType="com.cy.school1.vo.CourseVO">
+        select * from course left join teacher USING (tno)
+        <where>
+            <choose>
+                <when test="key1=='cno'">
+                    cno not like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and not cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and not credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and not ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and not cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and not tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='cname'">
+                    cname not like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cno'">
+                            and not cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and not credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and not ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and not cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and not tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='credit'">
+                    credit not like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and not cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and not cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and not ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and not cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and not tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='ctime'">
+                    ctime not like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and not cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and not credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and not cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and not cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and not tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='cplace'">
+                    cplace not like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and not cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and not credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and not ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and not cno like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='tname'">
+                            and not tname like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+                <when test="key1=='tname'">
+                    tname not like concat('%',#{value1},'%')
+                    <choose>
+                        <when test="key2=='cname'">
+                            and not cname like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='credit'">
+                            and not credit like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='ctime'">
+                            and not ctime like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cplace'">
+                            and not cplace like concat('%',#{value2},'%');
+                        </when>
+                        <when test="key2=='cno'">
+                            and not cno like concat('%',#{value2},'%');
+                        </when>
+                        <otherwise>
+                            ;
+                        </otherwise>
+                    </choose>
+                </when>
+            </choose>
+        </where>
+    </select>
+
+    <select id="findSCByCno" resultType="com.cy.school1.vo.CourseVO">
+        select cno,cname,credit,ctime,detail,course.tno,tname,cplace
+        from course,teacher
+        where course.tno=teacher.tno and cno=#{cno}
+    </select>
+
+    <select id="findVOByCno" resultType="com.cy.school1.vo.CourseVO">
+        select cno,cname,credit,cplace,ctime,need,detail,course.tno,teacher.tname
+        from course,
+             teacher
+        where course.tno = teacher.tno and cno=#{cno};
+    </select>
+
+</mapper>

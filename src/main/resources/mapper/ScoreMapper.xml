@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace属性：用于指定当前的映射文件和哪个接口进行映射，需要指定接口的文件路径，需要标注包的完整路径接口-->
+<mapper namespace="com.cy.school1.mapper.ScoreMapper">
+    <resultMap id="ScoreEntityMap" type="com.cy.school1.entity.Score">
+<!--        id写的是自增列-->
+<!--        <id column="sno" property="sno"></id>-->
+        <result column="is_delete" property="isDelete"></result>
+        <result column="created_user" property="createdUser"></result>
+        <result column="created_time" property="createdTime"></result>
+        <result column="modified_user" property="modifiedUser"></result>
+        <result column="modified_time" property="modifiedTime"></result>
+    </resultMap>
+
+    <!--代表开启使用主键递增-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="aid" parameterType="com.cy.school1.entity.Score">
+        INSERT INTO score(
+           sdeno,sdept,classes,sno,cno,
+            grade,is_delete,created_user,created_time,modified_user,modified_time
+        )VALUES (
+            #{sdeno},#{sdept},#{classes},#{sno},#{cno},
+            #{grade},#{isDelete},#{createdUser},#{createdTime},#{modifiedUser},#{modifiedTime}
+         )
+    </insert>
+
+    <!-- 插入多条成绩 -->
+<!--    <insert id="insertScoresList" parameterType="com.cy.school1.entity.Score">-->
+<!--        INSERT INTO score (-->
+<!--            sno,cno,grade,-->
+<!--            created_user,created_time,modified_user,modified_time-->
+<!--        ) VALUES-->
+<!--        <foreach item="score" collection="scores" separator=",">-->
+<!--            (-->
+<!--            #{sno},#{cno},#{grade},-->
+<!--            #{createdUser},#{createdTime},#{modifiedUser},#{modifiedTime}-->
+<!--            )-->
+<!--        </foreach>-->
+<!--    </insert>-->
+
+    <!-- 修改成绩 -->
+    <update id="updateGrade">
+        UPDATE score
+        set grade = #{grade}
+        WHERE sno = #{sno} and cno=#{cno};
+    </update>
+
+    <!-- 补全score的日志文件 -->
+    <update id="updateAScore">
+        UPDATE score
+        SET
+            grade = #{grade},
+            modified_user = #{modifiedUser},
+            modified_time = #{modifiedTime}
+        WHERE
+            sno=#{sno}
+          AND
+            cno=#{cno}
+    </update>
+
+
+    <select id="countBySno" resultType="java.lang.Integer">
+        SELECT count(*) FROM score WHERE sno=#{sno}
+    </select>
+
+    <!-- 查询所有成绩 -->
+    <select id="findScoreBySno" resultMap="ScoreEntityMap">
+        SELECT * FROM score
+        ORDER BY sno ASC
+    </select>
+
+    <!-- 根据学号查询成绩（学号、课程号） -->
+    <select id="findVOBySno" resultType="com.cy.school1.vo.ScoreVO">
+        select student.sno,student.sname,score.cno,course.cname,grade
+        from student, score,course
+        where student.sno = #{sno}
+        and score.cno = course.cno
+    </select>
+
+    <!--查询所有成绩-->
+    <select id="findAllScores" resultType="com.cy.school1.vo.ScoreVO">
+        select student.sno,student.sname,score.cno,course.cname,grade
+        from student, score,course
+        where student.sno = score.sno
+        and score.cno = course.cno
+    </select>
+
+
+    <!-- 删除成绩 -->
+    <delete id="deleteScore">
+        DELETE FROM score
+        WHERE sno=#{sno} AND cno = #{cno}
+    </delete>
+
+    <!-- 根据学号、课程号查询 -->
+    <select id="findScoreBySnoCno" resultType="com.cy.school1.entity.Score">
+        SELECT * FROM score
+        WHERE sno=#{sno} and cno = #{cno}
+    </select>
+
+    <!--查询自己的成绩 -->
+    <select id="findMyScore" resultType="com.cy.school1.vo.ScoreVO">
+        SELECT score_order_item.sno,sname,score_order_item.cno,cname,grade,tname
+        FROM score_order_item,course,teacher,student
+        WHERE score_order_item.sno = #{sno} AND score_order_item.cno=course.cno
+          AND course.tno = teacher.tno and score_order_item.sno=student.sno
+    </select>
+</mapper>

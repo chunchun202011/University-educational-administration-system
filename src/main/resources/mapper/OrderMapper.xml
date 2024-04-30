@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.school1.mapper.OrderMapper">
+    <resultMap id="OrderEntityMap" type="com.cy.school1.vo.OrderVO">
+        <result column="total_credit" property="totalCredit"></result>
+        <result column="create_time" property="createdTime"></result>
+    </resultMap>
+
+    <insert id="insertOrder" useGeneratedKeys="true" keyProperty="scid">
+        insert into scorder(sno,cno,total_credit,status,
+           order_time,choose_time,created_user,created_time,
+            modified_user,modified_time)
+        values(#{sno},#{cno},#{totalCredit},#{status},
+               #{orderTime},#{chooseTime},#{createdUser},#{chooseTime},
+               #{modifiedUser},#{modifiedTime});
+    </insert>
+
+    <insert id="insertOrderItem" useGeneratedKeys="true" keyProperty="od">
+        insert into sc_order_item(sno,cno,scid,cname,credit,term,created_user,
+            created_time,modified_user,modified_time)
+        values(#{sno},#{cno},#{scid},#{cname},#{credit},#{term},#{createdUser},
+               #{createdTime},#{modifiedUser},#{modifiedTime});
+    </insert>
+
+
+    <!--找出选课单中含有的所有选课-->
+    <select id="findAllOrderItems" resultMap="OrderEntityMap">
+        select sc_order_item.scid,sc_order_item.sno,student.sname,
+               sc_order_item.cno,cname,credit,term,sc_order_item.created_time,
+               scorder.total_credit
+        from sc_order_item,scorder,student
+        where sc_order_item.scid = scorder.scid
+          and student.sno = sc_order_item.sno;
+    </select>
+
+    <!--查找某个选课单的数据-->
+    <select id="findOrderItemsByScid" resultMap="OrderEntityMap">
+        select sc_order_item.scid,sc_order_item.sno,student.sname,
+               sc_order_item.cno,cname,credit,term,sc_order_item.created_time,
+               scorder.total_credit
+        from sc_order_item,scorder,student
+        where sc_order_item.scid = scorder.scid
+          and sc_order_item.scid=#{scid} and student.sno = sc_order_item.sno;
+    </select>
+
+
+    <select id="findByCondition" resultMap="OrderEntityMap">
+        select sc_order_item.scid,sc_order_item.sno,
+               student.sname,sc_order_item.cno,cname,credit,
+               term,sc_order_item.created_time,scorder.total_credit
+        from sc_order_item,scorder,student
+        <where>
+            <if test="scid != null">
+                AND scorder.scid = #{scid}
+            </if>
+            <if test="sno != null">
+                AND sc_order_item.sno = #{sno}
+            </if>
+            <if test="cno != null">
+                AND sc_order_item.cno = #{cno}
+            </if>
+             and sc_order_item.sno = student.sno and sc_order_item.scid = scorder.scid
+        </where>
+    </select>
+
+
+    <select id="findBySno" resultMap="OrderEntityMap">
+        select sc_order_item.scid,sc_order_item.sno,student.sname,
+               sc_order_item.cno,cname,credit,term,
+               sc_order_item.created_time,scorder.total_credit
+        from sc_order_item,scorder,student
+        where sc_order_item.scid = scorder.scid and sc_order_item.sno=#{sno}
+          and student.sno = sc_order_item.sno
+        order by scid;
+    </select>
+
+
+</mapper>

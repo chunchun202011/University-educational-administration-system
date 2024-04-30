@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8">
+		<!--edge浏览器H5兼容设置-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--360浏览器H5兼容设置-->
+		<meta name="renderer" content="webkit" />
+		<title>教务系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--导入核心文件-->
+		<script src="../bootstrap3/js/holder.js"></script>
+		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<!-- 字体图标 -->
+		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="../css/top.css" />
+		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+		<script src="../js/adddel.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<!--头部-->
+		<header class="header">
+			<!--教务系统logo-->
+			<div class="row">
+				<div class="col-md-3">
+					<a href="tindex.html">
+						<!--						<img src="../images/index/stumalllogo.png" />-->
+						<img src="../images/index/toplogo.jpg" alt="" width="300" height="80" />
+					</a>
+				</div>
+				<!--快捷选项-->
+				<div class="col-md-9 top-item">
+					<ul class="list-inline pull-right">
+						<!--						<li><a href="favorites.html"><span class="fa fa-heart"></span>&nbsp;收藏</a></li>-->
+						<!--						<li class="li-split">|</li>-->
+						<!--						<li><a href="orders.html"><span class="fa fa-file-text"></span>&nbsp;订单</a></li>-->
+						<!--						<li class="li-split">|</li>-->
+						<!--						<li><a href="cart.html"><span class="fa fa-cart-plus"></span>&nbsp;购物车</a></li>-->
+						<!--						<li class="li-split">|</li>-->
+						<!--						<li>-->
+						<!-- 资料查询 -->
+						<li>
+							<div class="btn-group">
+								<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+									<span id="top-dropdown1-btn"><span class="fa fa-search"></span>&nbsp;资料查询 <span class="caret"></span></span>
+								</button>
+								<ul class="dropdown-menu top-dropdown-ul" role="menu">
+									<li><a href="selectStudent.html">学生信息	</a></li>
+									<li><a href="selectOrders.html">选课全记录	</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="li-split">|</li>
+
+						<!-- 我的课程管理 -->
+						<li>
+							<div class="btn-group">
+								<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+									<span id="top-dropdown2-btn"><span class="fa fa-file-text"></span>&nbsp;课程管理 <span class="caret"></span></span>
+								</button>
+								<ul class="dropdown-menu top-dropdown-ul" role="menu">
+									<li><a href="myTCourse.html">我教的课	</a></li>
+									<li><a href="myStudent.html">选课学生	</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="li-split">|</li>
+
+
+						<!--下列列表按钮 ：成绩管理-->
+						<li>
+							<div class="btn-group">
+								<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+									<span id="top-dropdown-btn"><span class="fa fa-gears"></span>&nbsp;成绩管理 <span class="caret"></span></span>
+								</button>
+								<ul class="dropdown-menu top-dropdown-ul" role="menu">
+									<li><a href="addScore.html">新增成绩	</a></li>
+									<li><a href="scores.html">所有成绩	</a></li>
+								</ul>
+							</div>
+						</li>
+						<li class="li-split">|</li>
+						<li><a href="tlogin.html"><span class="fa fa-user"></span>&nbsp;登录</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="text clearfix" style="text-align:center;">
+				<span style="float:right;"><b>教务系统教师端</b></span>
+			</div>
+		</header>
+		<!--导航 -->
+		<!--分割导航和顶部-->
+		<div class="row top-nav">
+			<div class="col-md-6">
+				<ul class="nav nav-pills">
+					<li>
+						<a href="#"></a>
+					</li>
+					<li class="active"><a href="tindex.html"><span class="fa fa-home"></span></a></li>
+					<li><a href="selectStudent.html">学生信息</a></li>
+					<li><a href="selectOrders.html">选课全记录</a></li>
+					<li><a href="myTCourse.html">我教的课</a></li>
+					<li><a href="myStudent.html">选课学生</a></li>
+					<li><a href="scores.html">管理成绩</a></li>
+				</ul>
+			</div>
+		</div>
+		<!--头部结束-->
+		<!--导航结束-->
+		<div class="container">
+			<div class="col-md-2">
+				<!--左侧导航开始-->
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<!--主选项：课程管理-->
+							<p class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">课程管理</a>
+							</p>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div><a href="selectStudent.html">查询学生</a></div>
+								<div><a href="orders.html">课程查询</a></div>
+								<!--								<div><a href="orders.html">待收货</a></div>-->
+								<!--								<div><a href="orders.html">待评价</a></div>-->
+								<!--								<div><a href="orders.html">退货退款</a></div>-->
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<!--主选项：成绩管理-->
+							<p class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">成绩管理</a>
+							</p>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<!--								<div><a href="password.html">修改密码</a></div>-->
+								<!--								<div><a href="userdata.html">个人资料</a></div>-->
+								<div><a href="addScore.html">新增成绩</a></div>
+								<div><a href="address.html"><b>所有成绩</b></a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--左侧导航结束-->
+			</div>
+			<div class="col-md-10">
+				<div class="panel panel-default">
+					<ul class="nav nav-tabs">
+						<!--	<li><a href="password.html">修改密码</a></li>-->
+						<!--	<li><a href="userdata.html">个人资料</a></li>-->
+						<!--	<li><a href="upload.html">上传头像</a></li>-->
+						<li class="active"><a href="#">成绩管理</a></li>
+					</ul>
+					<div class="panel-body">
+						<!--成绩显示-->
+						<table class="table table-striped">
+							<caption>成绩列表</caption>
+							<thead>
+								<tr>
+									<th>成绩单号</th>
+									<th>学号</th>
+									<th>姓名</th>
+									<th>课程号</th>
+									<th>课程名</th>
+									<th>成绩</th>
+									<th colspan="3">操作</th>
+								</tr>
+							</thead>
+							<tbody id="score-list">
+<!--								<tr>-->
+<!--									<td>3221702938</td>-->
+<!--									<td>林木</td>-->
+<!--									<td>00213</td>-->
+<!--									<td>高等数学</td>-->
+<!--									<td>0</td>-->
+<!--									<td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span> 修改</a></td>-->
+<!--									<td><a class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> 删除</a></td>-->
+<!--									<td><a class="btn btn-xs add-def btn-default">设为默认</a></td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td>3221702938</td>-->
+<!--									<td>林木</td>-->
+<!--									<td>00213</td>-->
+<!--									<td>高等数学</td>-->
+<!--									<td>0</td>-->
+<!--									<td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span> 修改</a></td>-->
+<!--									<td><a class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> 删除</a></td>-->
+<!--									<td><a class="btn btn-xs add-def btn-default">设为默认</a></td>-->
+<!--								</tr>-->
+<!--								<tr>-->
+<!--									<td>3221702938</td>-->
+<!--									<td>林木</td>-->
+<!--									<td>00213</td>-->
+<!--									<td>高等数学</td>-->
+<!--									<td>0</td>-->
+<!--									<td><a class="btn btn-xs btn-info"><span class="fa fa-edit"></span> 修改</a></td>-->
+<!--									<td><a class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> 删除</a></td>-->
+<!--									<td><a class="btn btn-xs add-def btn-default">设为默认</a></td>-->
+<!--								</tr>-->
+							</tbody>
+						</table>
+						<a href="addScore.html" class="btn btn-sm btn-primary"><span class="fa fa-plus"></span>新增成绩</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--页脚开始-->
+		<div class="clearfix"></div>
+		<footer class="footer">
+			<!-- 页面底部-备案号 #footer -->
+			<div class="col-md-12 text-center bottom">
+<!--				Copyright © 2022 dnsc.cn All Rights Reserved 京ICP备08963888号-45 <a target="_blank" href="http://www.dnsc.cn/">圆心科技集团有限公司</a> 版权所有-->
+				Copyright © 2022 gdut.cn All Rights Reserved 粤ICP备08963888号 广东工业大学 版权所有
+			</div>
+		</footer>
+		<!--页脚结束-->
+	</body>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			showScoreList();
+		});
+		/* 展示用户成绩列表 */
+		function showScoreList(){
+			$.ajax({
+				url:"/score/tall",
+				type:"GET",
+				dataType:"JSON",
+				success:function (json){
+					if(json.state == 200){
+						let list = json.data;
+						console.log(list);
+						for (let i = 0;i < list.length;i++){
+							let tr = '<tr>\n' +
+									'<input name="snos" value="#{sno}" type="checkbox" class="ckitem" />\n' +
+									'<td>#{sr}</td>\n' +
+									'<td>#{sno}</td>\n' +
+									'<td>#{sname}</td>\n' +
+									'<td>#{cno}</td>\n' +
+									'<td>#{cname}</td>\n' +
+									'<td>#{grade}</td>\n' +
+									'<td><a onclick=\"update(\'#{sno}\',\'#{cno}\')\" class=\"btn btn-xs add-del btn-info\"><span class="fa fa-edit"></span> 修改</a></td>\n' +
+									// "<a onclick=\"deleteScore('"+#{sno}+"','"+#{cno}+"')\" class=\"btn btn-xs add-del btn-info\"><span class=\"fa fa-trash-o\"></span> 删除</a></td>\n";
+									// '<td><a onclick="deleteScore(this.sno,this.cno)" class="btn btn-xs add-del btn-info"><span class="fa fa-trash-o"></span> 删除</a></td>\n' +
+									"<td><a onclick=\"deleteScore('#{sno}','#{cno}')\" class=\"btn btn-xs add-del btn-info\"><span class=\"fa fa-trash-o\"></span> 删除</a></td>\n" +
+									// '<td><a class="btn btn-xs add-def btn-default">设为默认</a></td>\n' +
+									'</tr>';
+							console.log(list[i].cno)
+							tr = tr.replace(/#{sr}/g,list[i].sr);  //正则表达式
+							tr = tr.replace(/#{sno}/g,list[i].sno);  //正则表达式
+							tr = tr.replace(/#{sname}/g,list[i].sname);
+							tr = tr.replace(/#{cno}/g,list[i].cno);
+							tr = tr.replace(/#{cname}/g,list[i].cname);
+							tr = tr.replace(/#{grade}/g,list[i].grade);
+							$("#score-list").append(tr);
+
+							console.log(list[i].sno);
+						}
+					}else{
+						alert("学生成绩信息加载失败！");
+					}
+				}
+			});
+		}
+
+		function deleteScore(sno,cno){
+			$.ajax({
+				// url:"/scores/" + sno + "/" + cno +"/delete",
+				url:"/score/delete?sno=" + sno + "&cno=" + cno,
+				type:"GET",
+				dataType:"JSON",
+				success:function (json){
+					if(json.state == 200){
+						alert("删除成绩成功！")
+						// location.href="/scores/" + sno + "/"+ cno + "/delete"
+						//重新加载成绩列表
+						window.parent.location.reload();
+					}else{
+						alert("删除成绩失败！");
+					}
+				},
+				error:function (xhr){
+					alert("删除成绩产生未知的异常！" + xhr.status);	//官网自带封装的status
+				}
+			});
+		}
+
+		function update(sno,cno) {
+			location.href = "updateScore.html?sno=" + sno + "&cno=" +cno;
+			// url = "updateScore.html?sno=" + sno + "&cno=" +cno;
+		}
+	</script>
+
+</html>

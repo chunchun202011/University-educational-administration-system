@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8">
+		<!--edge浏览器H5兼容设置-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--360浏览器H5兼容设置-->
+		<meta name="renderer" content="webkit" />
+		<title>教务系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--导入核心文件-->
+		<script src="../bootstrap3/js/holder.js"></script>
+		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<script src="../bootstrap3/jquery-1.11.1.min.js"></script>
+		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<!-- 字体图标 -->
+		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="../css/top.css" />
+		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+		<!--
+			<script type="text/javascript" src="../js/distpicker.data.js"></script>
+			<script type="text/javascript" src="../js/distpicker.js"></script>
+		-->
+
+	</head>
+
+	<body>
+	<!--头部-->
+	<header class="header">
+		<!--教务系统logo-->
+		<div class="row">
+			<div class="col-md-3">
+				<a href="tindex.html">
+					<img src="../images/index/toplogo.jpg" alt="" width="300" height="80" />
+				</a>
+			</div>
+			<!--快捷选项-->
+			<div class="col-md-9 top-item">
+				<ul class="list-inline pull-right">
+					<!-- 资料查询 -->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown1-btn"><span class="fa fa-search"></span>&nbsp;资料查询 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="selectStudent.html">学生信息	</a></li>
+								<!--									<li><a href="selectOrders.html">选课全记录	</a></li>-->
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+
+					<!-- 我的课程管理 -->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown2-btn"><span class="fa fa-file-text"></span>&nbsp;课程管理 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="myTCourse.html">我教的课	</a></li>
+								<li><a href="tmyStudent.html">选课学生	</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+
+
+					<!--下列列表按钮 ：成绩管理-->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown-btn"><span class="fa fa-gears"></span>&nbsp;成绩管理 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="addScore.html">新增成绩	</a></li>
+								<li><a href="tMyAddScore.html">所有成绩	</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+					<li><a href="tlogin.html"><span class="fa fa-user"></span>&nbsp;登录</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="text clearfix" style="text-align:center;">
+			<span style="float:right;"><b>教务系统教师端</b></span>
+		</div>
+	</header>
+	<!--导航 -->
+	<!--分割导航和顶部-->
+	<div class="row top-nav">
+		<div class="col-md-6">
+			<ul class="nav nav-pills">
+				<li>
+					<a href="#"></a>
+				</li>
+				<li class="active"><a href="tindex.html"><span class="fa fa-home"></span></a></li>
+				<li><a href="selectStudent.html">学生信息</a></li>
+				<li><a href="myTCourse.html">我教的课</a></li>
+				<li><a href="tmyStudent.html">选课学生</a></li>
+				<li><a href="tMyAddScore.html">管理成绩</a></li>
+			</ul>
+		</div>
+	</div>
+	<!--头部结束-->
+		<!--导航结束-->
+		<div class="container">
+			<div class="col-md-2">
+				<!--左侧导航开始-->
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<!--主选项：我的订单-->
+							<p class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">课程管理</a>
+							</p>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div><a href="myTCourse.html">我教的课</a></div>
+								<div><a href="myStudent.html">选课学生</a></div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<!--主选项：成绩管理-->
+							<p class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">成绩管理</a>
+							</p>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div><a href="addScore.html"><b>新增成绩</b></a></div>
+								<div><a href="scores.html">所有成绩</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--左侧导航结束-->
+			</div>
+			<div class="col-md-10">
+				<div class="panel panel-default">
+					<ul class="nav nav-tabs">
+<!--						<li><a href="password.html">修改密码</a></li>-->
+<!--						<li><a href="userdata.html">个人资料</a></li>-->
+<!--						<li><a href="upload.html">上传头像</a></li>-->
+						<li class="active"><a href="#">修改成绩</a></li>
+					</ul>
+					<div class="panel-body">
+						<!--修改成绩表单开始-->
+						<form id="form-update-score" class="form-horizontal" role="form">
+							<div class="form-group">
+								<label class="col-md-2 control-label"><span class="txtred">*</span>学号：</label>
+								<div class="col-md-8">
+									<input id="sno" name="sno" type="text" class="form-control" placeholder="请输入学生学号:" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><span class="txtred">*</span>课程号：</label>
+								<div class="col-md-8">
+									<input id="cno" name="cno" type="text" class="form-control" placeholder="请输入课程号:" readonly="readonly">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><span class="txtred">*</span>课程名：</label>
+								<div class="col-md-8">
+									<input id="cname" name="cname" type="text" class="form-control" placeholder="请输入课程名:" readonly="readonly">
+								</div>
+							</div>
+<!--							<div class="score_content" data-toggle="distpicker">-->
+<!--								<div class="form-group">-->
+<!--									<label class="col-md-2 control-label"><span class="txtred">*</span>课程：</label>-->
+<!--									<div class="col-md-3">-->
+<!--										<select id="course-list" name="cno" class="form-control" data-district="&#45;&#45;&#45;&#45; 选择课程 &#45;&#45;&#45;&#45;"></select>-->
+<!--									</div>-->
+<!--								</div>-->
+								<div class="form-group">
+									<label class="col-md-2 control-label"><span class="txtred">*</span>成绩：</label>
+									<div class="col-md-8">
+										<input name="grade" type="text" class="form-control" placeholder="请输入学生成绩:">
+									</div>
+								</div>
+							<div class="form-group">
+								<label class="col-md-2 control-label"><a href="tMyAddScore.html">返回</a>&nbsp;&nbsp;&nbsp;</label>
+								<div class="col-sm-10">
+									<input id="btn-update-score" type="button" class="col-md-1 btn btn-primary" value="保存" />
+									<input type="reset" class="col-md-offset-1 col-md-1 btn btn-primary" value="重置" />
+								</div>
+							</div>
+<!--							</div>-->
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--页脚开始-->
+		<div class="clearfix"></div>
+		<footer class="footer">
+			<!-- 页面底部-备案号 #footer -->
+			<div class="col-md-12 text-center bottom">
+<!--				Copyright © 2022 dnsc.cn All Rights Reserved 京ICP备08963888号-45 <a target="_blank" href="http://www.dnsc.cn/">圆心科技集团有限公司</a> 版权所有-->
+				Copyright © 2022 gdut.cn All Rights Reserved 粤ICP备08963888号 广东工业大学 版权所有
+			</div>
+		</footer>
+		<!--页脚结束-->
+		<!--js代码只需要被script标签即可，可以放在body结束之前-->
+		<script type="text/javascript">
+			// value属性用于表示当前这个区域的code值，0表示不指向任何区域，不至于找不到
+			let defaultOption = "<option value='0'>--- 请选择 ---</option>";
+
+			$(document).ready(function () {
+				// showCourseList();
+				//设置默认的“请选择”的值，作为控件的默认值
+				$('#course-list').append(defaultOption);
+				showASno();
+				showCname();
+			});
+
+			function showASno() {
+				let sno = getQueryVariable('sno');
+				// $("#sno").text(sno);
+				// $("#sno").empty();
+				document.getElementById('sno').value=sno;
+				// $("#form-update-score").serialize();
+				$("#sno").val(sno);
+				let cno = getQueryVariable('cno');
+				$("#cno").val(cno);
+			}
+
+			//获取地址栏参数
+			function getQueryVariable(variable) {
+				// 从?开始获取后面的所有数据
+				var query = window.location.search.substring(1);
+				// 从字符串&开始分隔成数组split
+				var vars = query.split("&");
+				// 遍历该数组
+				for (var i = 0; i < vars.length; i++) {
+					// 从等号部分分割成字符
+					var pair = vars[i].split("=");
+					// 如果第一个元素等于 传进来的参的话 就输出第二个元素
+					if (pair[0] == variable) {
+						return pair[1];
+					}
+				}
+				return (false);
+			}
+
+			function showCname(){
+				let cno = getQueryVariable('cno');
+				$.ajax({
+					url:"/courses/findVO?cno="+cno,
+					type:"GET",
+					data:cno,
+					dataType:"JSON",
+					success:function (json){
+						if (json.state==200){
+							$("#cname").val(json.data.cname);
+						}else {
+							alert("查询课程名失败！");
+						}
+					},
+					error:function (xhr){
+						alert("查询课程名产生未知的异常！" + xhr.status);	//官网自带封装的status
+					}
+				});
+			}
+			
+			$("#btn-update-score").click(function () {
+				$.ajax({
+					url:"/score/update",
+					type:"POST",
+					data:$("#form-update-score").serialize(),
+					dataType:"JSON",
+					success:function (json){
+						if(json.state == 200){	//自己在json封装的state
+							alert("修改成绩成功");
+						}else{
+							alert("修改成绩失败");
+						}
+					},
+					error:function (xhr){
+						alert("修改成绩产生未知的异常！" + xhr.status);	//官网自带封装的status
+					}
+				});
+			});
+
+			/*课程的下拉列表数据展示*/
+			// function showCourseList(){
+			// 	let cno = $("#course-list").val();
+			// 	$.ajax({
+			// 		url:"/courses/teacher",
+			// 		type:"POST",
+			// 		// data:"cno="+cno,
+			// 		dataType:"JSON",
+			// 		success:function (json){
+			// 			if(json.state == 200){
+			// 				let list = json.data
+			// 				for (let i = 0;i < list.length;i++){
+			// 					let opt =
+			// 							"<option value='"+list[i].cno+"'>"+list[i].cname+"</option>";
+			// 					$("#course-list").append(opt);
+			// 				}
+			// 			}else{
+			// 				alert("我教的课信息加载失败");
+			// 			}
+			// 		},
+			// 		error:function (xhr){
+			// 			alert("查询我教的课程产生未知的异常！" + xhr.status);	//官网自带封装的status
+			// 		}
+			// 	});
+			// }
+		</script>
+	</body>
+
+</html>

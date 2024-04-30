@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.school1.mapper.ScoreOrderMapper">
+
+    <insert id="insertRecord" useGeneratedKeys="true" keyProperty="sr">
+        insert into scorerecord(sno,cno,
+                                created_user,created_time,
+                                modified_user,modified_time)
+        values(#{sno},#{cno},#{createdUser},#{createdTime},
+               #{modifiedUser},#{modifiedTime});
+    </insert>
+
+
+    <insert id="insertScoreItem" parameterType="com.cy.school1.entity.ScoreItem">
+        insert into score_order_item(sno,cno,sr,grade,
+                                created_user,created_time,
+                                modified_user,modified_time)
+        values(#{sno},#{cno},#{sr},#{grade},#{createdUser},#{createdTime},
+               #{modifiedUser},#{modifiedTime});
+    </insert>
+
+    <!--查找所有成绩的数据-->
+    <select id="findAllScoreItems" resultType="com.cy.school1.vo.ScoreVO">
+        select score_order_item.sno,score_order_item.cno,sname,cname,grade,tname
+        from score_order_item,student,course,teacher
+        where score_order_item.sno = student.sno and score_order_item.cno = course.cno
+                and teacher.tno = course.tea
+    </select>
+
+    <!-- 查询某个学生的成绩数据 -->
+    <select id="findScoreItemsBySno" resultType="com.cy.school1.vo.ScoreVO">
+        select score_order_item.sno,score_order_item.cno,sname,cname,grade,tname
+        from score_order_item,student,course,teacher
+        where score_order_item.sno = student.sno and score_order_item.cno = course.cno
+          and teacher.tno = course.tea and score_order_item.sno = #{sno}
+    </select>
+
+    <!-- 查询某个课程的数据 -->
+    <select id="findScoreItemsByCno" resultType="com.cy.school1.vo.ScoreVO">
+        select score_order_item.sno,score_order_item.cno,sname,cname,grade,tname
+        from score_order_item,student,course,teacher
+        where score_order_item.sno = student.sno and score_order_item.cno = course.cno
+          and teacher.tno = course.tea and score_order_item.cno = #{cno}
+    </select>
+
+    <select id="findScoreVOBySnos" resultType="com.cy.school1.vo.ScoreVO">
+        select score_order_item.sno,score_order_item.cno,sname,cname,grade,tname
+        from score_order_item,student,course,teacher
+        where score_order_item.sno = student.sno and score_order_item.cno = course.cno
+        and teacher.tno = course.tea and
+        score_order_item.sno IN (
+        <foreach collection="array" item="sno" separator=",">
+            #{sno}
+        </foreach>
+        )
+        ORDER BY score_order_item.sno ASC
+    </select>
+
+
+</mapper>

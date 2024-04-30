@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8">
+		<!--edge浏览器H5兼容设置-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--360浏览器H5兼容设置-->
+		<meta name="renderer" content="webkit" />
+		<title>教务系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--导入核心文件-->
+		<script src="../bootstrap3/js/holder.js"></script>
+		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<!-- 字体图标 -->
+		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="../css/top.css" />
+		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="../css/order.css" />
+	</head>
+
+	<body>
+	<!--头部-->
+	<header class="header">
+		<!--教务系统logo-->
+		<div class="row">
+			<div class="col-md-3">
+				<a href="tindex.html">
+					<img src="../images/index/toplogo.jpg" alt="" width="300" height="80" />
+				</a>
+			</div>
+			<!--快捷选项-->
+			<div class="col-md-9 top-item">
+				<ul class="list-inline pull-right">
+					<!-- 资料查询 -->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown1-btn"><span class="fa fa-search"></span>&nbsp;资料查询 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="selectStudent.html">学生信息	</a></li>
+								<!--									<li><a href="selectOrders.html">选课全记录	</a></li>-->
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+
+					<!-- 我的课程管理 -->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown2-btn"><span class="fa fa-file-text"></span>&nbsp;课程管理 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="myTCourse.html">我教的课	</a></li>
+								<li><a href="tmyStudent.html">选课学生	</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+
+
+					<!--下列列表按钮 ：成绩管理-->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown-btn"><span class="fa fa-gears"></span>&nbsp;成绩管理 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="addScore.html">新增成绩	</a></li>
+								<li><a href="tMyAddScore.html">所有成绩	</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+					<li><a href="tlogin.html"><span class="fa fa-user"></span>&nbsp;登录</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="text clearfix" style="text-align:center;">
+			<span style="float:right;"><b>教务系统教师端</b></span>
+		</div>
+	</header>
+	<!--导航 -->
+	<!--分割导航和顶部-->
+	<div class="row top-nav">
+		<div class="col-md-6">
+			<ul class="nav nav-pills">
+				<li>
+					<a href="#"></a>
+				</li>
+				<li class="active"><a href="tindex.html"><span class="fa fa-home"></span></a></li>
+				<li><a href="selectStudent.html">学生信息</a></li>
+				<li><a href="myTCourse.html">我教的课</a></li>
+				<li><a href="tmyStudent.html">选课学生</a></li>
+				<li><a href="tMyAddScore.html">管理成绩</a></li>
+			</ul>
+		</div>
+	</div>
+	<!--头部结束-->
+		<!--导航结束-->
+		<div class="container">
+			<div class="col-md-2">
+				<!--左侧导航开始-->
+				<div class="panel-group" id="accordion">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<!--主选项：课程管理-->
+							<p class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">课程管理</a>
+							</p>
+						</div>
+						<div id="collapseOne" class="panel-collapse collapse in">
+							<div class="panel-body">
+								<div><a href="myTCourse.html"><b>我教的课</b></a></div>
+								<div><a href="tmyStudent.html">选课学生</a></div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<!--主选项：成绩管理-->
+							<p class="panel-title">
+								<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">成绩管理</a>
+							</p>
+						</div>
+						<div id="collapseTwo" class="panel-collapse collapse">
+							<div class="panel-body">
+								<div><a href="addScore.html">新增成绩</a></div>
+								<div><a href="tscore1.html">批量新增</a></div>
+								<div><a href="tMyAddScore.html">所有成绩</a></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--左侧导航结束-->
+			<div class="col-md-10">
+				<div class="panel panel-default">
+					<div id="teacherTitle" class="panel-heading">
+						<p class="panel-title">
+<!--							订单号：1101000301，下单时间：2018-12-2 20:32:17 ， 收货人：八戒-->
+							 教工号：    姓名：姓名
+						</p>
+					</div>
+					<div class="panel-body">
+						<table class="mycourse-table" width="100%">
+							<thead>
+								<tr>
+<!--									<th width="15%"></th>-->
+									<th width="15%">课程号</th>
+									<th width="15%">课程名</th>
+									<th width="8%">学分</th>
+									<th width="15%">上课地点</th>
+									<th width="10%">学时</th>
+<!--									<th width="10%">状态</th>-->
+<!--									<th width="10%">操作</th>-->
+								</tr>
+							</thead>
+							<tbody id="mycourse-list" class="mycourse-body">
+								<tr>
+<!--									<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>-->
+									<td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>
+									<td>¥<span>5298</span></td>
+									<td>1件</td>
+									<td>¥<span>5298</span></td>
+									<td>¥<span>5298</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-10">
+						<a href="tindex.html" class="btn btn-sm btn-primary"><span class="fa fa-home"></span>返回主页</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--页脚开始-->
+		<div class="clearfix"></div>
+		<footer class="footer">
+			<!-- 页面底部-备案号 #footer -->
+			<div class="col-md-12 text-center bottom">
+<!--				Copyright © 2022 dnsc.cn All Rights Reserved 京ICP备08963888号-45 <a target="_blank" href="http://www.dnsc.cn/">圆心科技集团有限公司</a> 版权所有-->
+				Copyright © 2022 gdut.cn All Rights Reserved 粤ICP备08963888号 广东工业大学 版权所有
+			</div>
+		</footer>
+		<!--页脚结束-->
+	<script type="text/javascript">
+		$(document).ready(function () {
+			showMyCourse();
+			showTeacherTitle();
+		});
+		/* 展示个人信息 */
+		function showTeacherTitle() {
+			//清空tbody标签中的数据
+			$("#teacherTitle").empty();
+			$.ajax({
+				url:"/courses/teacher",
+				type:"GET",
+				dataType:"JSON",
+				success:function (json) {
+					if (json.state == 200){
+						let list = json.data;
+
+						// json去重
+						for(var i = 0; i < list.length-1; i++){
+							for(var j = i+1; j < list.length; j++){
+								if(list[i].tno === list[j].tno){
+									list.splice(j,1)
+									j--; //删完之后j-1抵消for里面的j++确保不跳过重复的值
+								}
+							}
+						}
+						for (let i = 0;i< list.length;i++){
+							let p = '<p className="list[i].tno">教工号：#{tno}</p>\n' +
+									'<p className="list[i].tname">姓名：#{tname}</p>\n';
+
+							// tr = tr.replace(/#{cno}/g,list[i].cno);
+							p = p.replace(/#{tno}/g,list[i].tno);
+							p = p.replace(/#{tname}/g,list[i].tname);
+
+							$("#teacherTitle").append(p);
+
+							//更新总学分和总学期数
+							// allCount += list[i].term;
+							// allCredit += list[i].term * list[i].credit;
+						}
+						// $("#all-count").html(allCount);
+						// $("#all-credit").html(allCredit);
+					}
+				},
+				error:function (xhr) {
+					alert("个人信息加载产生未知的异常！"+ xhr.status);
+				}
+			});
+		}
+
+		/* 展示我的选课列表数据 */
+		function showMyCourse(){
+			//清空tbody标签中的数据
+			$("#mycourse-list").empty();
+			$.ajax({
+				url:"/courses/teacher",
+				type:"GET",
+				dataType:"JSON",
+				success:function (json) {
+					if (json.state == 200){
+						let list = json.data;
+						for (let i = 0;i< list.length;i++){
+							let tr='<tr>\n' +
+									// '<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>\n' +
+									'<td>#{cno}</td>\n' +
+									'<td>#{cname}</td>\n' +
+									'<td><span>#{credit}</span></td>\n' +
+									'<td><span>#{cplace}</span></td>\n' +
+									'<td>#{ctime}</td>\n' +
+									'</tr>';
+							// tr = tr.replace(/#{cno}/g,list[i].cno);
+							tr = tr.replace(/#{cno}/g,list[i].cno);
+							tr = tr.replace(/#{cname}/g,list[i].cname);
+							tr = tr.replace(/#{credit}/g,list[i].credit);
+							tr = tr.replace(/#{cplace}/g,list[i].cplace);
+							tr = tr.replace(/#{ctime}/g,list[i].ctime);
+
+							$("#mycourse-list").append(tr);
+
+							//更新总学分和总学期数
+							// allCount += list[i].term;
+							// allCredit += list[i].term * list[i].credit;
+						}
+						// $("#all-count").html(allCount);
+						// $("#all-credit").html(allCredit);
+					}
+				},
+				error:function (xhr) {
+					alert("我教的课加载产生未知的异常！"+ xhr.status);
+				}
+			});
+		}
+
+	</script>
+	</body>
+
+</html>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.school1.mapper.NewsMapper">
+    <resultMap id="NewsEntityMap" type="com.cy.school1.entity.News">
+            <id column="nid" property="nid"></id>
+            <result column="created_user" property="createdUser"></result>
+            <result column="created_time" property="createdTime"></result>
+            <result column="modified_user" property="modifiedUser"></result>
+            <result column="modified_time" property="modifiedTime"></result>
+    </resultMap>
+
+    <insert id="insertNews">
+        INSERT INTO news(
+            nid,title,content,
+            created_user,created_time,modified_user,modified_time
+        )VALUES(
+             #{nid},#{title},#{content},
+                #{createdUser},#{createdTime},
+                #{modifiedUser},#{modifiedTime}
+         )
+    </insert>
+
+    <update id="updateNews">
+        UPDATE news
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="modifiedUser != null and modifiedUser != ''">
+                modified_user = #{modifiedUser},
+            </if>
+            <if test="modifiedTime != null">
+                modified_time = #{modifiedTime},
+            </if>
+        </set>
+        WHERE nid = #{nid};
+    </update>
+
+    <delete id="deleteNews">
+        DELETE FROM news
+        WHERE nid = #{nid};
+    </delete>
+
+
+    <select id="findNewsByNid" resultMap="NewsEntityMap">
+        select * from news
+        where nid=#{nid}
+    </select>
+
+    <select id="findNewsList" resultMap="NewsEntityMap">
+        select * from news
+    </select>
+
+</mapper>

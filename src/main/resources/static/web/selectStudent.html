@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8">
+		<!--edge浏览器H5兼容设置-->
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!--360浏览器H5兼容设置-->
+		<meta name="renderer" content="webkit" />
+		<title>教务系统</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--导入核心文件-->
+		<script src="../bootstrap3/js/holder.js"></script>
+		<link href="../bootstrap3/css/bootstrap.css" rel="stylesheet" type="text/css">
+		<script src="../bootstrap3/jquery-1.9.1.min.js"></script>
+		<script src="../bootstrap3/js/bootstrap.js"></script>
+		<!-- 字体图标 -->
+		<link rel="stylesheet" href="../bootstrap3/font-awesome-4.7.0/css/font-awesome.css" />
+		<link rel="stylesheet" type="text/css" href="../css/layout.css" />
+		<link rel="stylesheet" type="text/css" href="../css/top.css" />
+		<link rel="stylesheet" type="text/css" href="../css/footer.css" />
+		<link rel="stylesheet" type="text/css" href="../css/orderConfirm.css" />
+		<link rel="stylesheet" type="text/css" href="../css/cart.css" />
+<!--		<script src="../js/orderConfirm.js" type="text/javascript" charset="utf-8"></script>-->
+	</head>
+
+	<body>
+	<!--头部-->
+	<header class="header">
+		<!--教务系统logo-->
+		<div class="row">
+			<div class="col-md-3">
+				<a href="tindex.html">
+					<img src="../images/index/toplogo.jpg" alt="" width="300" height="80" />
+				</a>
+			</div>
+			<!--快捷选项-->
+			<div class="col-md-9 top-item">
+				<ul class="list-inline pull-right">
+					<!-- 资料查询 -->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown1-btn"><span class="fa fa-search"></span>&nbsp;资料查询 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="selectStudent.html">学生信息	</a></li>
+								<!--									<li><a href="selectOrders.html">选课全记录	</a></li>-->
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+
+					<!-- 我的课程管理 -->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown2-btn"><span class="fa fa-file-text"></span>&nbsp;课程管理 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="myTCourse.html">我教的课	</a></li>
+								<li><a href="tmyStudent.html">选课学生	</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+
+
+					<!--下列列表按钮 ：成绩管理-->
+					<li>
+						<div class="btn-group">
+							<button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+								<span id="top-dropdown-btn"><span class="fa fa-gears"></span>&nbsp;成绩管理 <span class="caret"></span></span>
+							</button>
+							<ul class="dropdown-menu top-dropdown-ul" role="menu">
+								<li><a href="addScore.html">新增成绩	</a></li>
+								<li><a href="tMyAddScore.html">所有成绩	</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="li-split">|</li>
+					<li><a href="tlogin.html"><span class="fa fa-user"></span>&nbsp;登录</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="text clearfix" style="text-align:center;">
+			<span style="float:right;"><b>教务系统教师端</b></span>
+		</div>
+	</header>
+	<!--导航 -->
+	<!--分割导航和顶部-->
+	<div class="row top-nav">
+		<div class="col-md-6">
+			<ul class="nav nav-pills">
+				<li>
+					<a href="#"></a>
+				</li>
+				<li class="active"><a href="tindex.html"><span class="fa fa-home"></span></a></li>
+				<li><a href="selectStudent.html">学生信息</a></li>
+				<li><a href="myTCourse.html">我教的课</a></li>
+				<li><a href="tmyStudent.html">选课学生</a></li>
+				<li><a href="tMyAddScore.html">管理成绩</a></li>
+			</ul>
+		</div>
+	</div>
+	<!--头部结束-->
+		<!--导航结束-->
+		<div class="container">
+			<p>学生信息查询</p>
+			<br/>
+			<p>请选择查询条件：</p>
+
+			<div class="form-group">
+				<label for="condition" class="col-sm-3 control-label">查询条件:</label>
+				<div class="col-sm-2">
+					<select id="condition" name="condition" class="form-control" >
+						<option value="">---请选择条件---</option>
+						<option value="and">and</option>
+						<option value="or">or</option>
+						<option value="not">not</option>
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="key1" name="key1" class="form-control" >
+						<option value="">---请选属性---</option>
+						<option value="sno">学号</option>
+						<option value="sname">姓名</option>
+						<option value="phone">电话</option>
+						<option value="email">邮箱</option>
+						<option value="shome">户籍</option>
+						<option value="status">学籍状态</option>
+					</select>
+					<input id="value1" type="text" style="padding:0.5em;border-radius:10px;">
+				</div>
+				<div class="col-sm-2">
+					<select id="key2" name="key2" class="form-control" >
+						<option value="">---请选属性---</option>
+						<option value="sno">学号</option>
+						<option value="sname">姓名</option>
+						<option value="phone">电话</option>
+						<option value="email">邮箱</option>
+						<option value="shome">户籍</option>
+						<option value="status">学籍状态</option>
+					</select>
+					<input id="value2" type="text" style="padding:0.5em;border-radius:10px;">
+				</div>
+				<input id="btn-select" type="button" value="查询" class="btn btn-primary"/>
+				<!--				<input id="value1" type="text" style="padding:0.5em;border-radius:10px;">-->
+<!--				<input id="sname" type="text" style="padding:0.5em;border-radius:10px;">-->
+			</div>
+<!--			<span class="pull-right"><input id="btn-select" type="button" value="查询" class="btn btn-primary"/></span>-->
+			<br/>
+			<br/>
+				<div class="col-md-12">
+					<form id="form-create-order" role="form">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<p class="panel-title">学生信息：</p>
+							</div>
+							<div class="panel-body">
+								<table class="student-table" width="100%">
+									<thead>
+										<tr>
+<!--											<th width="15%"></th>-->
+											<th width="15%" style="font-size:18px;">学号</th>
+											<th width="15%" style="font-size:18px;">姓名</th>
+											<th width="15%" style="font-size:18px;">电话</th>
+											<th width="15%" style="font-size:18px;">邮箱</th>
+											<th width="15%" style="font-size:18px;">户籍</th>
+											<th width="15%" style="font-size:18px;">学籍状态</th>
+<!--											<th width="15%" style="font-size:18px;">性别</th>-->
+										</tr>
+									</thead>
+									<tbody id="student-list" class="cart-body">
+										<tr>
+											<td><span>5298</span></td>
+											<td>联想(Lenovo)小新Air13 Pro 13.3英寸14.8mm超轻薄笔记本电脑</td>
+											<td>¥<span>5298</span></td>
+											<td>1</td>
+											<td><span>5298</span></td>
+											<td><span>5298</span></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</form>
+					<a href="tindex.html" class="btn btn-sm btn-primary"><span class="fa fa-home"></span>返回主页</a>
+				</div>
+			</div>
+		</div>
+		<!--页脚开始-->
+		<div class="clearfix"></div>
+		<footer class="footer">
+			<!-- 页面底部-备案号 #footer -->
+			<div class="col-md-12 text-center bottom">
+<!--				Copyright © 2022 dnsc.cn All Rights Reserved 京ICP备08963888号-45 <a target="_blank" href="http://www.dnsc.cn/">圆心科技集团有限公司</a> 版权所有-->
+				Copyright © 2022 gdut.cn All Rights Reserved 粤ICP备08963888号 广东工业大学 版权所有
+			</div>
+
+		</footer>
+		<!--页脚结束-->
+		<!--页脚结束-->
+		<script type="text/javascript">
+			$(document).ready(function () {
+				// showSnoList();
+				// showSnameList();
+				// showGenderList();
+				showStudentList();
+			});
+
+			function showStudentList() {
+				//清空tbody标签中的数据
+				$("#student-list").empty();
+				$.ajax({
+					url:"/students/allNotDelete",
+					type:"GET",
+					// data:location.search.substr(1),  //截取参数列表，截取问号后面的
+					dataType:"JSON",
+					success:function (json) {
+						if (json.state == 200){
+							let list = json.data;
+							for (let i = 0;i< list.length;i++){
+								let tr='<tr>\n' +
+										'<td style="font-size:16px;">#{sno}</td>\n' +
+										'<td style="font-size:16px;"><span>#{sname}</span></td>\n' +
+										'<td style="font-size:16px;">#{phone}</td>\n' +
+										'<td style="font-size:16px;"><span>#{email}</span></td>\n' +
+										'<td style="font-size:16px;"><span>#{shome}</span></td>\n' +
+										'<td style="font-size:16px;"><span>#{status}</span></td>\n' +
+										// '<td style="font-size:16px;"<span>#{gender}</span></td>\n' +
+										'</tr>';
+								// tr = tr.replace(/#{cno}/g,list[i].cno);
+								tr = tr.replace(/#{sno}/g,list[i].sno);
+								tr = tr.replace(/#{sname}/g,list[i].sname);
+								tr = tr.replace(/#{phone}/g,list[i].phone);
+								tr = tr.replace(/#{email}/g,list[i].email);
+								tr = tr.replace(/#{shome}/g,list[i].shome);
+								tr = tr.replace(/#{status}/g,list[i].status);
+								// tr = tr.replace(/#{gender}/g,gendertype(list[i]));
+								$("#student-list").append(tr);
+							}
+						}
+					},
+					error:function (xhr) {
+						alert("学生列表加载产生未知的异常！"+ xhr.status);
+					}
+				});
+			}
+
+			function gendertype(row){
+				if(row.gender === 1){
+					return "男"
+				}else if(row.gender===0){
+					return "女"
+				}
+			}
+
+			$("#btn-select").click(function () {
+				let condition = $("#condition").val();
+				let key1 = $("#key1").val();
+				let value1 = $("#value1").val();
+				let key2 = $("#key2").val();
+				let value2 = $("#value2").val();
+				$("#student-list").empty();
+				$.ajax({
+					url:"/students/select_condition",
+					type:"GET",
+					data: {
+						"condition":condition,
+						"key1":key1,
+						"value1":value1,
+						"key2":key2,
+						"value2":value2
+					},
+					dataType:"JSON",
+					success:function (json) {
+						if (json.state == 200){
+							// location.href="payment.html";
+							// window.location.reload();
+							alert("查询成功");
+							// window.location.reload();
+							let list = json.data;
+							for (let i = 0;i< list.length;i++){
+								let tr='<tr>\n' +
+										// '<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>\n' +
+										'<td>#{sno}</td>\n' +
+										'<td><span>#{sname}</span></td>\n' +
+										'<td>#{phone}</td>\n' +
+										'<td><span>#{email}</span></td>\n' +
+										'<td><span>#{shome}</span></td>\n' +
+										'<td><span>#{status}</span></td>\n' +
+										// '<td><span>#{gender}</span></td>\n' +
+										'</tr>';
+								// tr = tr.replace(/#{cno}/g,list[i].cno);
+								tr = tr.replace(/#{sno}/g,list[i].sno);
+								tr = tr.replace(/#{sname}/g,list[i].sname);
+								tr = tr.replace(/#{phone}/g,list[i].phone);
+								tr = tr.replace(/#{email}/g,list[i].email);
+								tr = tr.replace(/#{shome}/g,list[i].shome);
+								tr = tr.replace(/#{status}/g,list[i].status);
+								// tr = tr.replace(/#{gender}/g,gendertype(list[i]));
+								$("#student-list").append(tr);
+							}
+							console.log(json.data);
+						}
+					},
+					error:function (xhr) {
+						alert("查询产生未知的异常！"+ xhr.status);
+					}
+				});
+			})
+
+
+
+
+			// $("#btn-select-and").click(function () {
+			// 	// let cnos = location.search.substr(1); //cnos=11001&cnos=11002
+			// 	let sno = $("#sno").val();
+			// 	let sname = $("#sname").val();
+			// 	let gender = $("#gender").val();
+			// 	$("#student-list").empty();
+			// 	$.ajax({
+			// 		url:"/students/select_and",
+			// 		type:"GET",
+			// 		data: "sno="+sno+"&sname="+sname+"&gender="+gender,  // cnos = 11001&cnos=11002
+			// 		dataType:"JSON",
+			// 		success:function (json) {
+			// 			if (json.state == 200){
+			// 				// location.href="payment.html";
+			// 				// window.location.reload();
+			// 				alert("AND查询创建成功");
+			// 				// window.location.reload();
+			// 				let list = json.data;
+			// 				for (let i = 0;i< list.length;i++){
+			// 					let tr='<tr>\n' +
+			// 							// '<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>\n' +
+			// 							'<td>#{sno}</td>\n' +
+			// 							'<td><span>#{sname}</span></td>\n' +
+			// 							'<td>#{sdept}</td>\n' +
+			// 							'<td><span>#{classes}</span></td>\n' +
+			// 							'<td><span>#{shome}</span></td>\n' +
+			// 							'<td><span>#{phone}</span></td>\n' +
+			// 							'</tr>';
+			// 					// tr = tr.replace(/#{cno}/g,list[i].cno);
+			// 					tr = tr.replace(/#{sno}/g,list[i].sno);
+			// 					tr = tr.replace(/#{sname}/g,list[i].sname);
+			// 					tr = tr.replace(/#{sdept}/g,list[i].sdept);
+			// 					tr = tr.replace(/#{classes}/g,list[i].classes);
+			// 					tr = tr.replace(/#{shome}/g,list[i].shome);
+			// 					tr = tr.replace(/#{phone}/g,list[i].phone);
+			// 					$("#student-list").append(tr);
+			// 				}
+			// 				console.log(json.data);
+			// 			}
+			// 		},
+			// 		error:function (xhr) {
+			// 			alert("AND查询产生未知的异常！"+ xhr.status);
+			// 		}
+			// 	});
+			// })
+			//
+			// $("#btn-select-or").click(function () {
+			// 	// let cnos = location.search.substr(1); //cnos=11001&cnos=11002
+			// 	let sno = $("#sno").val();
+			// 	let sname = $("#sname").val();scorerecord
+			// 	let gender = $("#gender").val();
+			// 	$("#student-list").empty();
+			// 	$.ajax({
+			// 		url:"/students/select_or",
+			// 		type:"GET",
+			// 		data: "sno="+sno+"&sname="+sname+"&gender="+gender,  // cnos = 11001&cnos=11002
+			// 		dataType:"JSON",
+			// 		success:function (json) {
+			// 			if (json.state == 200){
+			// 				// location.href="payment.html";
+			// 				// window.location.reload();
+			// 				alert("OR查询创建成功");
+			// 				// window.location.reload();
+			// 				let list = json.data;
+			// 				for (let i = 0;i< list.length;i++){
+			// 					let tr='<tr>\n' +
+			// 							// '<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>\n' +
+			// 							'<td>#{sno}</td>\n' +
+			// 							'<td><span>#{sname}</span></td>\n' +
+			// 							'<td>#{sdept}</td>\n' +
+			// 							'<td><span>#{classes}</span></td>\n' +
+			// 							'<td><span>#{shome}</span></td>\n' +
+			// 							'<td><span>#{phone}</span></td>\n' +
+			// 							'</tr>';
+			// 					// tr = tr.replace(/#{cno}/g,list[i].cno);
+			// 					tr = tr.replace(/#{sno}/g,list[i].sno);
+			// 					tr = tr.replace(/#{sname}/g,list[i].sname);
+			// 					tr = tr.replace(/#{sdept}/g,list[i].sdept);
+			// 					tr = tr.replace(/#{classes}/g,list[i].classes);
+			// 					tr = tr.replace(/#{shome}/g,list[i].shome);
+			// 					tr = tr.replace(/#{phone}/g,list[i].phone);
+			// 					$("#student-list").append(tr);
+			// 				}
+			// 				console.log(json.data);
+			// 			}
+			// 		},
+			// 		error:function (xhr) {
+			// 			alert("OR查询产生未知的异常！"+ xhr.status);
+			// 		}
+			// 	});
+			// })
+			//
+			// $("#btn-select-not").click(function () {
+			// 	// let cnos = location.search.substr(1); //cnos=11001&cnos=11002
+			// 	let sno = $("#sno").val();
+			// 	let sname = $("#sname").val();
+			// 	let gender = $("#gender").val();
+			// 	$("#student-list").empty();
+			// 	$.ajax({
+			// 		url:"/students/select_not",
+			// 		type:"GET",
+			// 		data: "sno="+sno+"&sname="+sname+"&gender="+gender,  // cnos = 11001&cnos=11002
+			// 		dataType:"JSON",
+			// 		success:function (json) {
+			// 			if (json.state == 200){
+			// 				// location.href="payment.html";
+			// 				// window.location.reload();
+			// 				alert("NOT查询创建成功");
+			// 				// window.location.reload();
+			// 				let list = json.data;
+			// 				for (let i = 0;i< list.length;i++){
+			// 					let tr='<tr>\n' +
+			// 							// '<td><img src="../images/portal/12DELLXPS13-silvery/collect.png" class="img-responsive" /></td>\n' +
+			// 							'<td>#{sno}</td>\n' +
+			// 							'<td><span>#{sname}</span></td>\n' +
+			// 							'<td>#{sdept}</td>\n' +
+			// 							'<td><span>#{classes}</span></td>\n' +
+			// 							'<td><span>#{shome}</span></td>\n' +
+			// 							'<td><span>#{phone}</span></td>\n' +
+			// 							'</tr>';
+			// 					// tr = tr.replace(/#{cno}/g,list[i].cno);
+			// 					tr = tr.replace(/#{sno}/g,list[i].sno);
+			// 					tr = tr.replace(/#{sname}/g,list[i].sname);
+			// 					tr = tr.replace(/#{sdept}/g,list[i].sdept);
+			// 					tr = tr.replace(/#{classes}/g,list[i].classes);
+			// 					tr = tr.replace(/#{shome}/g,list[i].shome);
+			// 					tr = tr.replace(/#{phone}/g,list[i].phone);
+			// 					$("#student-list").append(tr);
+			// 				}
+			// 				console.log(json.data);
+			// 			}
+			// 		},
+			// 		error:function (xhr) {
+			// 			alert("NOT查询产生未知的异常！"+ xhr.status);
+			// 		}
+			// 	});
+			// })
+
+
+			/* 展示学号数据 */
+			// function showSnoList(){
+			// 	$("#sno-list").empty();
+			// 	$.ajax({
+			// 		url:"/students/list",
+			// 		type:"POST",
+			// 		// data:"parent=000",
+			// 		dataType:"JSON",
+			// 		success:function (json){
+			// 			if(json.state == 200){
+			// 				let list = json.data
+			//
+			// 				// json去重
+			// 				for(var i = 0; i < list.length-1; i++){
+			// 					for(var j = i+1; j < list.length; j++){
+			// 						if(list[i].sno === list[j].sno){
+			// 							list.splice(j,1)
+			// 							j--; //删完之后j-1抵消for里面的j++确保不跳过重复的值
+			// 						}
+			// 					}
+			// 				}
+			// 				for (let i = 0;i < list.length;i++){
+			// 					let opt =
+			// 							"<option value='"+list[i].sno+"'>"+list[i].sno+"</option>";
+			// 					console.log(list[i].sno)
+			// 					$("#sno-list").append(opt);
+			// 				}
+			// 			}else{
+			// 				alert("学号加载失败");
+			// 			}
+			// 		},
+			// 		error:function (xhr){
+			// 			alert("查询学号产生未知的异常！" + xhr.status);	//官网自带封装的status
+			// 		}
+			// 	});
+			// }
+			//
+			// /* 展示学生姓名数据 */
+			// function showSnameList(){
+			// 	$("#sname-list").empty();
+			// 	$.ajax({
+			// 		url:"/students/list",
+			// 		type:"POST",
+			// 		// data:"parent=000",
+			// 		dataType:"JSON",
+			// 		success:function (json){
+			// 			if(json.state == 200){
+			// 				let list = json.data
+			//
+			// 				// json去重
+			// 				for(var i = 0; i < list.length-1; i++){
+			// 					for(var j = i+1; j < list.length; j++){
+			// 						if(list[i].sname === list[j].sname){
+			// 							list.splice(j,1)
+			// 							j--; //删完之后j-1抵消for里面的j++确保不跳过重复的值
+			// 						}
+			// 					}
+			// 				}
+			// 				for (let i = 0;i < list.length;i++){
+			// 					let opt =
+			// 							"<option value='"+list[i].sname+"'>"+list[i].sname+"</option>";
+			// 					console.log(list[i].sname)
+			// 					$("#sname-list").append(opt);
+			// 				}
+			// 			}else{
+			// 				alert("学生姓名加载失败");
+			// 			}
+			// 		},
+			// 		error:function (xhr){
+			// 			alert("查询学生姓名产生未知的异常！" + xhr.status);	//官网自带封装的status
+			// 		}
+			// 	});
+			// }
+			//
+			// /* 展示性别数据 */
+			// function showGenderList(){
+			// 	$("#gender-list").empty();
+			// 	$.ajax({
+			// 		url:"/students/list",
+			// 		type:"POST",
+			// 		// data:"parent=000",
+			// 		dataType:"JSON",
+			// 		success:function (json){
+			// 			if(json.state == 200){
+			// 				let list = json.data
+			//
+			// 				// json去重
+			// 				for(var i = 0; i < list.length-1; i++){
+			// 					for(var j = i+1; j < list.length; j++){
+			// 						if(list[i].gender === list[j].gender){
+			// 							list.splice(j,1)
+			// 							j--; //删完之后j-1抵消for里面的j++确保不跳过重复的值
+			// 						}
+			// 					}
+			// 				}
+			//
+			// 				function gendertype(row){
+			// 					if(row.gender === 1){
+			// 						return "男"
+			// 					}else if(row.gender===0){
+			// 						return "女"
+			// 					}
+			// 				}
+			//
+			// 				for (let i = 0;i < list.length;i++){
+			// 					let opt =
+			// 							"<option value='"+list[i].gender+"'>"+gendertype(list[i])+"</option>";
+			// 					console.log(list[i].gender)
+			// 					$("#gender-list").append(opt);
+			// 				}
+			// 			}else{
+			// 				alert("性别数据加载失败");
+			// 			}
+			// 		},
+			// 		error:function (xhr){
+			// 			alert("查询性别产生未知的异常！" + xhr.status);	//官网自带封装的status
+			// 		}
+			// 	});
+			// }
+
+
+
+
+		</script>
+	</body>
+
+</html>
